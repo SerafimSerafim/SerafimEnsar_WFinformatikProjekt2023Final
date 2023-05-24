@@ -52,7 +52,7 @@ input.onButtonEvent(Button.A, ButtonEvent.Click, function () {
     }
 })
 function LED_Setzen () {
-    basic.setLedColor(Colors.Blue)
+    basic.setLedColor(0x00ffff)
     basic.clearScreen()
     led.plot(fadenkreuz_x, fadenkreuz_y)
     basic.pause(100)
@@ -88,7 +88,7 @@ function AufAngriffPruefen () {
     }
 }
 function LED_Angriff () {
-    basic.setLedColor(Colors.Red)
+    basic.setLedColor(0xff0000)
     basic.clearScreen()
     led.plot(fadenkreuz_x, fadenkreuz_y)
     basic.pause(100)
@@ -110,7 +110,7 @@ function doAnschalten () {
     }
 }
 function LED_Verteidigung () {
-    basic.setLedColor(Colors.Green)
+    basic.setLedColor(0x00ff00)
     basic.clearScreen()
     anschalten_array = schiffe
     anschalten_wert = 9
@@ -243,9 +243,27 @@ basic.forever(function () {
         LED_Verteidigung()
     } else if (modus == "gewonnen") {
         basic.showIcon(IconNames.Happy)
+        basic.pause(50)
+        basic.showLeds(`
+            . . . . .
+            # . . . #
+            # . # . #
+            # . # . #
+            . # . # .
+            `)
+        basic.pause(50)
     } else if (modus == "verloren") {
         radio.sendValue("a_rueckgabe", ergebnis)
         basic.showIcon(IconNames.Sad)
+        basic.pause(50)
+        basic.showLeds(`
+            . . . . .
+            . # . . .
+            . # . . .
+            . # . . .
+            . # # # .
+            `)
+        basic.pause(50)
     } else if (modus == "senden_angriff") {
         basic.setLedColor(Colors.Orange)
         radio.sendValue("a_feld_y", fadenkreuz_y)
