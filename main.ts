@@ -1,3 +1,30 @@
+radio.onDataPacketReceived(function () {
+    let value = 0
+    let name = ""
+    if (modus == "verteidigung" && name == "a_feld_y") {
+        angriff_y = value
+    } else if (modus == "verteidigung" && name == "a_feld_x") {
+        angriff_x = value
+    } else if (modus == "senden_angriff" && name == "a_rueckgabe") {
+        if (value == 99) {
+            modus = "gewonnen"
+        } else {
+            schuesse[fadenkreuz_y][fadenkreuz_x] = value
+            basic.setLedColor(Colors.Purple)
+            if (value == 9) {
+                basic.showIcon(IconNames.Yes)
+            } else {
+                basic.showIcon(IconNames.No)
+            }
+            basic.pause(1000)
+            modus = "verteidigung"
+        }
+    } else if ((modus == "senden_verteidigung" || modus == "teamwahl") && name == "funk_ende") {
+        modus = "angriff"
+    } else if (modus == "setzen" && name == "team") {
+        team = 1
+    }
+})
 input.onButtonEvent(Button.AB, ButtonEvent.Click, function () {
     if (modus == "setzen") {
         if (schiffe[fadenkreuz_y][fadenkreuz_x] == 0) {
@@ -100,6 +127,7 @@ let treffer = 0
 let ergebnis = 0
 let anschalten_wert = 0
 let anschalten_array: number[][] = []
+let team = 0
 let schiffe_max = 0
 let modus = ""
 let angriff_y = 0
@@ -232,7 +260,6 @@ basic.forever(function () {
         angriff_y = -1
         radio.sendValue("a_rueckgabe", ergebnis)
     } else if (modus == "teamwahl") {
-        let team = 0
         if (team == 1) {
             modus = "verteidigung"
         } else {
