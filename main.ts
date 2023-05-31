@@ -10,7 +10,7 @@ radio.onDataPacketReceived(function () {
             modus = "gewonnen"
         } else {
             schuesse[fadenkreuz_y][fadenkreuz_x] = value
-            basic.setLedColor(Colors.Purple)
+            basic.setLedColor(0x7f00ff)
             if (value == 9) {
                 basic.showIcon(IconNames.Yes)
             } else {
@@ -265,11 +265,11 @@ basic.forever(function () {
             `)
         basic.pause(50)
     } else if (modus == "senden_angriff") {
-        basic.setLedColor(Colors.Orange)
+        basic.setLedColor(0xff8000)
         radio.sendValue("a_feld_y", fadenkreuz_y)
         radio.sendValue("a_feld_x", fadenkreuz_x)
     } else if (modus == "senden_verteidigung") {
-        basic.setLedColor(Colors.Blue)
+        basic.setLedColor(0x007fff)
         for (let i = 0; i <= 20; i++) {
             led.toggle(angriff_x, angriff_y)
             basic.pause(50)
