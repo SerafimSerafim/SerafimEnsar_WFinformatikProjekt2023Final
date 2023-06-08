@@ -243,29 +243,11 @@ basic.forever(function () {
         LED_Verteidigung()
     } else if (modus == "gewonnen") {
         basic.showIcon(IconNames.Happy)
-        basic.pause(50)
-        basic.showLeds(`
-            . . . . .
-            # . . . #
-            # . # . #
-            # . # . #
-            . # . # .
-            `)
-        basic.pause(50)
     } else if (modus == "verloren") {
         radio.sendValue("a_rueckgabe", ergebnis)
         basic.showIcon(IconNames.Sad)
-        basic.pause(50)
-        basic.showLeds(`
-            . . . . .
-            . # . . .
-            . # . . .
-            . # . . .
-            . # # # .
-            `)
-        basic.pause(50)
     } else if (modus == "senden_angriff") {
-        basic.setLedColor(0xff8000)
+        basic.setLedColor(0xff0000)
         radio.sendValue("a_feld_y", fadenkreuz_y)
         radio.sendValue("a_feld_x", fadenkreuz_x)
     } else if (modus == "senden_verteidigung") {
@@ -283,5 +265,14 @@ basic.forever(function () {
         } else {
             radio.sendValue("team", 1)
         }
+    }
+})
+basic.forever(function () {
+    if (modus == "teamwahl") {
+        basic.setLedColor(0xffff00)
+        radio.sendValue("team", 0)
+    }
+    if (modus == "teamwahl" && team == 1) {
+        radio.sendValue("funk_ende", 0)
     }
 })
